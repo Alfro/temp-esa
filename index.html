@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Jugadores</h3>
+    <div id="players"></div>
+    <h3>Regalos</h3>
+    <div id="presents"></div>
+    <h3>Rondas</h3>
+    <div id="rounds"></div>
+    <div>
+    Nueva ronda (persona):
+    <input id="new-round-player" type="text">
+    <button id="new-round-button">GO</button>
+    </div>
+    <br>
+    <div>
+    Acabar ronda (regalo):
+    <input id="end-round-present" type="text">
+    <button id="end-round-button">END</button>
+    </div>
+    <script>
+        function main(){
+            let players = localStorage.getItem("players");
+            let presents = localStorage.getItem("presents");
+            let rounds = localStorage.getItem("rounds");
+            console.log(players);
+            console.log(presents);
+            console.log(rounds);
+            if (typeof players != 'array') {
+                players = [];
+            }
+            if (typeof presents != 'array') {
+                presents = [];
+            }
+            if (typeof rounds != 'array') {
+                rounds = [];
+            }
+            function drawGameState(){
+                document.getElementById("players").textContent="";
+                document.getElementById("presents").textContent="";
+                document.getElementById("rounds").textContent="";
+                players.forEach((value, key) => {
+                    let player = document.createElement('li');
+                    player.innerHTML = `${key} - ${value}`;
+                    document.getElementById("players").appendChild(player);
+                });
+                presents.forEach((value, key) => {
+                    let player = document.createElement('li');
+                    player.innerHTML = `${key} - ${value}`;
+                    document.getElementById("presents").appendChild(player);
+                });
+                rounds.forEach((value, key) => {
+                    let player = document.createElement('li');
+                    player.innerHTML = `${key} - ${value}`;
+                    document.getElementById("rounds").appendChild(player);
+                });
+            }
+
+            function newRound(){
+                const playerName = document.getElementById("new-round-player").value;
+                players[players.length] = playerName;
+                console.log(playerName, players);
+                drawGameState();
+                // if (presents.length <= 0){
+                //     const newPresent = "Presento";
+                // }
+                // presents[presents.length] = newPresent;
+            }
+            document.getElementById("new-round-button").addEventListener("click", newRound);
+
+            function endRound(){
+                const presentName = document.getElementById("end-round-present").value;
+                presents[presents.length] = playerName;
+                console.log(playerName, players);
+                drawGameState();
+                // if (presents.length <= 0){
+                //     const newPresent = "Presento";
+                // }
+                // presents[presents.length] = newPresent;
+            }
+            document.getElementById("end-round-button").addEventListener("click", endRound);
+
+
+            localStorage.setItem("rounds", rounds);
+            localStorage.setItem("players", players);
+            localStorage.setItem("presents", presents);
+        }
+        window.addEventListener("load", (event) => {
+            main();
+        });
+    </script>
+</body>
+</html>
